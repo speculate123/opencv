@@ -6,6 +6,25 @@ import pytesseract
 import pyautogui
 import matplotlib.pyplot as plt
 
+def get_red(img):
+    redImg = img[:,:,2]
+    return redImg
+
+def get_green(img):
+    greenImg = img[:,:,1]
+    return greenImg
+
+def get_blue(img):
+    blueImg = img[:,:,0]
+    return blueImg
+
+#img = cv2.imread(imagepath)
+#b, g, r = cv2.split(img)
+#cv2.imshow("Blue 1", b)
+#cv2.imshow("Green 1", g)
+#cv2.imshow("Red 1", r)
+
+
 imagepath = 'test3.jpg'
 
 #read gray image
@@ -24,6 +43,7 @@ image=cv2.absdiff(dilate,erode)
 image=cv2.bitwise_not(image)
 
 ret, th = cv2.threshold( image, 254, 255, cv2.THRESH_BINARY )
+#ret,thresh2 = cv2.threshold(img,127,255,cv2.THRESH_BINARY_INV)
 
 ret,im = cv2.threshold(im, 130, 255,cv2.THRESH_BINARY)
 
@@ -51,5 +71,6 @@ cv2.imshow('result',im)
 
 cv2.waitKey(0)
 
+pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe' 
 text = pytesseract.image_to_string(im, config="--psm 13")
 print(text)
